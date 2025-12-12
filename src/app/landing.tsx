@@ -125,7 +125,9 @@ export default function Landing() {
     e.preventDefault();
 
     router.push(
-      `/JOBS?text=${filter.text}&region=${filter.region?.value}&min=${filter.min}&max=${filter.max}`
+      `/JOBS?text=${filter.text}&region=${filter.region?.value || ""}&min=${
+        filter.min
+      }&max=${filter.max}`
     );
   };
 
@@ -294,9 +296,9 @@ export default function Landing() {
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-12 animate-slide-in">
                 <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-6 leading-tight">
-                  უბრალოდ <span className="gradient-text">კარგი</span>
+                  შენი <span className="gradient-text">დასაქმების</span>
                   <br />
-                  ვაკანსიები
+                  სააგენტო
                 </h1>
                 <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
                   100+ ვაკანსია საქართველოს საუკეთესო კომპანიებიდან
@@ -461,7 +463,7 @@ export default function Landing() {
                   </form>
 
                   {/* Quick Filters */}
-                  <div className="flex flex-wrap gap-3 mt-6">
+                  {/* <div className="flex flex-wrap gap-3 mt-6">
                     <button className="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-all hover:scale-105">
                       <span className="mr-2">🏠</span> Remote
                     </button>
@@ -474,7 +476,7 @@ export default function Landing() {
                     <button className="px-4 py-2 bg-orange-50 text-orange-600 rounded-lg hover:bg-orange-100 transition-all hover:scale-105">
                       <span className="mr-2">⚡</span> სასწრაფო
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

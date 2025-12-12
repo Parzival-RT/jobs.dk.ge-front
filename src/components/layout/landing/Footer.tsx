@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <>
       {/* Modern Footer */}
-      <footer className="bg-gray-900 text-white py-16 px-4">
+      <footer id="contact" className="bg-gray-900 text-white py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 md:gap-48 mb-12 max-w-4xl mx-auto">
             <div>
@@ -25,7 +25,7 @@ const Footer = () => {
                 />
               </div>
               <p className="text-gray-400 mb-4">
-                საქართველოს წამყვანი ვაკანსიების პლატფორმა
+                უბრალოდ კარგი ვაკანსიები და შესაძლებლობები ერთ სივრცეში.
               </p>
             </div>
 

@@ -91,7 +91,9 @@ const Jobs = () => {
     e.preventDefault();
 
     router.push(
-      `/JOBS?text=${filter.text}&region=${filter.region?.value}&min=${filter.min}&max=${filter.max}`
+      `/JOBS?text=${filter.text}&region=${filter.region?.value || ""}&min=${
+        filter.min
+      }&max=${filter.max}`
     );
   };
 
@@ -125,8 +127,11 @@ const Jobs = () => {
       try {
         const type = searchParams.get("type");
         const id = searchParams.get("id");
+        const region = searchParams.get("region");
+        const min = searchParams.get("min");
+        const max = searchParams.get("max");
 
-        const query = `&type=${type}&id=${id}`;
+        const query = `&region=${region}&type=${type}&id=${id}&max=${max}&min=${min}`;
         const response = await api.public.get(
           `/public/vacancy/v2/search?page=${currentPage}${query}`
         );
@@ -173,6 +178,27 @@ const Jobs = () => {
 
     fetchData();
   }, [setLoading]);
+
+  //:::* Load Filter Values from Query Params :::*//
+  useEffect(() => {
+    const text = searchParams.get("text") || "";
+    const regionValue = searchParams.get("region");
+    const min = searchParams.get("min") || "";
+    const max = searchParams.get("max") || "";
+
+    let selectedRegion: SingleValue<RegionType> = null;
+    if (regionValue && regionOptions.length > 0) {
+      const found = regionOptions.find((opt) => opt.value === regionValue);
+      selectedRegion = found || null;
+    }
+
+    setFilter({
+      text,
+      region: selectedRegion,
+      min,
+      max,
+    });
+  }, [regionOptions, searchParams]);
 
   return (
     <>
@@ -334,7 +360,7 @@ const Jobs = () => {
               </form>
 
               {/* Quick Filters */}
-              <div className="flex flex-wrap gap-3 mt-6">
+              {/* <div className="flex flex-wrap gap-3 mt-6">
                 <button className="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-all hover:scale-105">
                   <span className="mr-2">🏠</span> Remote
                 </button>
@@ -347,7 +373,7 @@ const Jobs = () => {
                 <button className="px-4 py-2 bg-orange-50 text-orange-600 rounded-lg hover:bg-orange-100 transition-all hover:scale-105">
                   <span className="mr-2">⚡</span> სასწრაფო
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         )}

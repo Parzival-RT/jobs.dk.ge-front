@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+// import Link from "next/link";
 import { api } from "@/lib/api";
 
 // Store Imports
@@ -66,7 +66,7 @@ const Faq = () => {
           <div className="p-8 my-36">
             <h1 className="text-2xl font-bold mb-6">ხშირად დასმული კითხვები</h1>
             <Accordion items={faqItems} />
-            <Link
+            {/* <Link
               href="/Register"
               className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-2 mt-2"
             >
@@ -86,7 +86,7 @@ const Faq = () => {
               </svg>
 
               <span>რეგისტრაცია</span>
-            </Link>
+            </Link> */}
           </div>
         </div>
       )}

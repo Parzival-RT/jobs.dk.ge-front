@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 // import ReactPaginate from "react-paginate";
+import Swal from "sweetalert2";
 
 // Third Packages
 // import Select, { SingleValue } from "react-select";
@@ -18,6 +19,7 @@ import { api } from "@/lib/api";
 
 // Store Imports
 import { useLandingStore } from "@/store/landingStore";
+import { useAuth } from "@/store/auth";
 import Link from "next/link";
 
 // Types and Interface
@@ -115,6 +117,7 @@ const Jobs = ({ params }: PageProps) => {
   //:::* Store States :::*//
   // const loading = useLandingStore((state) => state.loading);
   const setLoading = useLandingStore((state) => state.setLoading);
+  const user = useAuth((state) => state.user);
 
   //:::* Component States :::*//
   const [fullUrl, setFullUrl] = useState<string | null>(null);
@@ -172,6 +175,50 @@ const Jobs = ({ params }: PageProps) => {
   // Helper function to format number
   const formatNumber = (number: number) => {
     return Number(number).toLocaleString();
+  };
+
+  const handleSubmitCV = async () => {
+    // დადასტურების alert
+    const result = await Swal.fire({
+      title: "CV-ის გაგზავნა",
+      text: "დარწმუნებული ხართ, რომ გსურთ CV-ის გაგზავნა ამ ვაკანსიაზე?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "დიახ, გაგზავნა",
+      cancelButtonText: "არა, გაუქმება",
+      confirmButtonColor: "#155dfc",
+      cancelButtonColor: "#6b7280",
+    });
+
+    // თუ გააუქმა
+    if (!result.isConfirmed) {
+      return;
+    }
+
+    // ვაჩვენოთ loading
+    Swal.fire({
+      title: "იგზავნება...",
+      html: "გთხოვთ დაელოდოთ, თქვენი CV იგზავნება",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    // იმიტირებული delay
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    // წარმატება
+    Swal.fire({
+      icon: "success",
+      title: "წარმატებული!",
+      text: "თქვენი CV წარმატებით გაიგზავნა",
+      confirmButtonText: "დახურვა",
+      confirmButtonColor: "#10b981",
+      timer: 3000,
+      timerProgressBar: true,
+    });
   };
 
   //:::* Hooks :::*//
@@ -632,7 +679,14 @@ const Jobs = ({ params }: PageProps) => {
               </div>
 
               <div className="flex items-stretch gap-2 mt-20">
-                <Button type="button" variant="primary" length="full" size="lg">
+                <Button
+                  type="button"
+                  variant="primary"
+                  length="full"
+                  size="lg"
+                  disabled={!user}
+                  onClick={handleSubmitCV}
+                >
                   {vacancyInnerData?.VacancyCategory !== 279
                     ? "CV-ის გაგზავნა"
                     : "საკონტაქტოს დატოვება"}

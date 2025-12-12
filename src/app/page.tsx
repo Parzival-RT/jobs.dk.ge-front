@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import Landing from "./landing";
 
 export const metadata: Metadata = {
-  title: "უბრალოდ კარგი ვაკანსიები",
+  title: "შენი დასაქმების სააგენტო",
   description: "საუკეთესო ვაკანსიები მარტივად და სწრაფად",
 };
 
